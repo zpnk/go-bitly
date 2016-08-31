@@ -1,6 +1,7 @@
 # go-bitly
 
 [![Build Status](https://travis-ci.org/zpnk/go-bitly.svg?branch=master)](https://travis-ci.org/zpnk/go-bitly)
+[![Coverage Status](https://coveralls.io/repos/github/zpnk/go-bitly/badge.svg?branch=master)](https://coveralls.io/github/zpnk/go-bitly?branch=master)
 
 Simple Bitly v3 client for Go.
 
