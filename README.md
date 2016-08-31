@@ -1,5 +1,7 @@
 # go-bitly
 
+[![Build Status](https://travis-ci.org/zpnk/go-bitly.svg?branch=master)](https://travis-ci.org/zpnk/go-bitly)
+
 Simple Bitly v3 client for Go.
 
 **Work in Progress**
