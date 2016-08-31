@@ -10,8 +10,12 @@ Simple Bitly v3 client for Go.
 
 ## Usage
 
+```
+$ go get github.com/zpnk/go-bitly
+```
+
 ```go
-import "github.com/zpnk/go-bitly"
+import "github.com/zpnk/go-bitly/bitly"
 
 client := bitly.NewClient("<token>")
 
