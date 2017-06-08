@@ -28,7 +28,7 @@ type LinkLookup struct {
 //
 // Bitly API docs: http://dev.bitly.com/links.html#v3_expand
 func (client *Link) Expand(urls ...string) (links []ExpandedLink, err error) {
-	req, err := client.Get("/expand", url.Values{"shortUrl": urls})
+	req, err := client.get("/expand", url.Values{"shortUrl": urls})
 	if err != nil {
 		return
 	}
@@ -46,7 +46,7 @@ func (client *Link) Expand(urls ...string) (links []ExpandedLink, err error) {
 //
 // Bitly API docs: https://dev.bitly.com/links.html#v3_link_lookup
 func (client *Link) Lookup(urls ...string) (links []LinkLookup, err error) {
-	req, err := client.Get("/link/lookup", url.Values{"url": urls})
+	req, err := client.get("/link/lookup", url.Values{"url": urls})
 	if err != nil {
 		return
 	}

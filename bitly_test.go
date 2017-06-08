@@ -52,13 +52,13 @@ func newEndpoint(endpoint string, response string) {
 	})
 }
 
-func TestClient_Get_badJSON(t *testing.T) {
+func TestClient_get_badJSON(t *testing.T) {
 	setup()
 	defer teardown()
 
 	newEndpoint("/foo", `not_json`)
 
-	_, err := client.Get("/foo", url.Values{})
+	_, err := client.get("/foo", url.Values{})
 	if err == nil {
 		t.Errorf("Expected error to be returned")
 	}
@@ -67,11 +67,11 @@ func TestClient_Get_badJSON(t *testing.T) {
 	}
 }
 
-func TestClient_Get_serverError(t *testing.T) {
+func TestClient_get_serverError(t *testing.T) {
 	setup()
 	defer teardown()
 
-	_, err := client.Get("/foo123", url.Values{})
+	_, err := client.get("/foo123", url.Values{})
 	if err == nil {
 		t.Errorf("Expected error to be returned")
 	}
@@ -86,13 +86,13 @@ func TestClient_Get_serverError(t *testing.T) {
 	}
 }
 
-func TestClient_Get_bitlyError(t *testing.T) {
+func TestClient_get_bitlyError(t *testing.T) {
 	setup()
 	defer teardown()
 
 	newEndpoint("/foo", jsonRes("{}", 403, "RATE_LIMIT_EXCEEDED"))
 
-	_, err := client.Get("/foo", url.Values{})
+	_, err := client.get("/foo", url.Values{})
 	if err == nil {
 		t.Errorf("Expected error to be returned")
 	}

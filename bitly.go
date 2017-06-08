@@ -55,8 +55,8 @@ func New(accessToken string) (client *Client) {
 	return
 }
 
-// Get sends a "GET" request to the Bitly API and checks for errors.
-func (c *Client) Get(path string, params url.Values) (res Response, err error) {
+// get sends a request to the Bitly API and checks for errors.
+func (c *Client) get(path string, params url.Values) (res Response, err error) {
 	params.Set("access_token", c.AccessToken)
 
 	reqURL := *c.APIURL
