@@ -5,6 +5,41 @@ import (
 	"testing"
 )
 
+func TestLink_Expand(t *testing.T) {
+	setup()
+	defer teardown()
+
+	newEndpoint("/expand", jsonRes(
+		`{
+		"expand": [
+				{
+					"global_hash": "1RmnUT",
+					"long_url": "http://google.com",
+					"short_url": "http://bit.ly/1RmnUT",
+					"user_hash": "1RmnUT"
+				}
+			]
+		}`,
+		200,
+		"OK",
+	))
+
+	links, err := client.Link.Expand("http://bit.ly/1RmnUT")
+	if err != nil {
+		t.Fatalf("Link.Expand returned error: %v", err)
+	}
+
+	want := ExpandedLink{
+		GlobalHash: "1RmnUT",
+		LongURL:    "http://google.com",
+		ShortURL:   "http://bit.ly/1RmnUT",
+		UserHash:   "1RmnUT",
+	}
+	if !reflect.DeepEqual(links[0], want) {
+		t.Errorf("Link.Expand returned %+v, want %+v", links[0], want)
+	}
+}
+
 func TestLink_Lookup_single(t *testing.T) {
 	setup()
 	defer teardown()
