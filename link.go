@@ -1,37 +1,35 @@
 package bitly
 
-import "github.com/mitchellh/mapstructure"
+import (
+	"encoding/json"
+	"net/url"
+)
 
 // Link handles communication with the link related Bitly API endpoints.
 type Link struct {
 	*Client
 }
 
-// linkLookupReq specifies the optional parameters to the /link/lookup endpoint.
-type linkLookupReq struct {
-	URLs []string `url:"url"`
-}
-
-// LinkLookupRes specifies the response of the Link.Lookup method.
-type LinkLookupRes struct {
-	AggregateLink string `mapstructure:"aggregate_link"`
-	URL           string `mapstructure:"url"`
+// LinkLookup represents the results of the Link.Lookup method.
+type LinkLookup struct {
+	URL           string `json:"url"`
+	AggregateLink string `json:"aggregate_link"`
 }
 
 // Lookup queries for bitlink(s) mapping to the given url(s).
 //
 // Bitly API docs: https://dev.bitly.com/links.html#v3_link_lookup
-func (c *Link) Lookup(urls ...string) (res []LinkLookupRes, err error) {
-	params := linkLookupReq{URLs: urls}
-	r, err := c.Get("/link/lookup", params)
+func (client *Link) Lookup(urls ...string) (linkLookup []LinkLookup, err error) {
+	req, err := client.Get("/link/lookup", url.Values{"url": urls})
 	if err != nil {
 		return
 	}
 
-	err = mapstructure.Decode(r.Data["link_lookup"], &res)
+	res := map[string][]LinkLookup{}
+	err = json.Unmarshal(req.Data, &res)
 	if err != nil {
 		return
 	}
 
-	return
+	return res["link_lookup"], err
 }

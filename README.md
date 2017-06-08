@@ -4,7 +4,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/zpnk/go-bitly/badge.svg?branch=master)](https://coveralls.io/github/zpnk/go-bitly?branch=master)
 [![GoDoc](https://godoc.org/github.com/zpnk/go-bitly/bitly?status.svg)](https://godoc.org/github.com/zpnk/go-bitly/bitly)
 
-Simple Bitly v3 client for Go.
+Simple Bitly API v3 client for Go.
 
 **Work in Progress**
 
@@ -15,9 +15,9 @@ $ go get github.com/zpnk/go-bitly
 ```
 
 ```go
-import "github.com/zpnk/go-bitly/bitly"
+import "github.com/zpnk/go-bitly"
 
-client := bitly.NewClient("<token>")
+client := bitly.New("<token>")
 
 links, err := bitly.Link.Lookup("http://golang.org/", "http://google.com/")
 ```

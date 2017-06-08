@@ -7,9 +7,9 @@ Installation:
 
 Usage:
 
-	import "github.com/zpnk/go-bitly/bitly"
+	import "github.com/zpnk/go-bitly"
 
-	client := bitly.NewClient("<token>")
+	client := bitly.New("<token>")
 
 	links, err := bitly.Link.Lookup("http://golang.org/", "http://google.com/")
 
