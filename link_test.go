@@ -11,7 +11,7 @@ func TestLink_Expand(t *testing.T) {
 
 	newEndpoint("/expand", jsonRes(
 		`{
-		"expand": [
+			"expand": [
 				{
 					"global_hash": "1RmnUT",
 					"long_url": "http://google.com",
@@ -37,6 +37,44 @@ func TestLink_Expand(t *testing.T) {
 	}
 	if !reflect.DeepEqual(links[0], want) {
 		t.Errorf("Link.Expand returned %+v, want %+v", links[0], want)
+	}
+}
+
+func TestLink_Info(t *testing.T) {
+	setup()
+	defer teardown()
+
+	newEndpoint("/info", jsonRes(
+		`{
+			"info": [
+	      {
+	        "created_at": 1212926400,
+	        "created_by": null,
+	        "global_hash": "1RmnUT",
+	        "short_url": "http://bit.ly/1RmnUT",
+	        "title": "Google",
+	        "user_hash": "1RmnUT"
+	      }
+	    ]
+		}`,
+		200,
+		"OK",
+	))
+
+	links, err := client.Link.Info("http://bit.ly/1RmnUT")
+	if err != nil {
+		t.Fatalf("Link.Info returned error: %v", err)
+	}
+
+	want := LinkInfo{
+		CreatedAt:  1212926400,
+		GlobalHash: "1RmnUT",
+		ShortURL:   "http://bit.ly/1RmnUT",
+		Title:      "Google",
+		UserHash:   "1RmnUT",
+	}
+	if !reflect.DeepEqual(links[0], want) {
+		t.Errorf("Link.Info returned %+v, want %+v", links[0], want)
 	}
 }
 

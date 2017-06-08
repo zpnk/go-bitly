@@ -18,6 +18,16 @@ type ExpandedLink struct {
 	UserHash   string `json:"user_hash"`
 }
 
+// LinkInfo represents the results of the Link.Info method.
+type LinkInfo struct {
+	CreatedAt  int    `json:"created_at"`
+	CreatedBy  string `json:"created_by"`
+	GlobalHash string `json:"global_hash"`
+	ShortURL   string `json:"short_url"`
+	Title      string `json:"title"`
+	UserHash   string `json:"user_hash"`
+}
+
 // LinkLookup represents the results of the Link.Lookup method.
 type LinkLookup struct {
 	URL           string `json:"url"`
@@ -40,6 +50,24 @@ func (client *Link) Expand(urls ...string) (links []ExpandedLink, err error) {
 	}
 
 	return res["expand"], err
+}
+
+// Info returns the page title and other metadata for a given set of short urls.
+//
+// Bitly API docs: http://dev.bitly.com/links.html#v3_info
+func (client *Link) Info(urls ...string) (links []LinkInfo, err error) {
+	req, err := client.get("/info", url.Values{"shortUrl": urls})
+	if err != nil {
+		return
+	}
+
+	res := map[string][]LinkInfo{}
+	err = json.Unmarshal(req.Data, &res)
+	if err != nil {
+		return
+	}
+
+	return res["info"], err
 }
 
 // Lookup queries for bitlink(s) mapping to the given url(s).
