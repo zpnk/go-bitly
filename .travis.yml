@@ -6,6 +6,5 @@ go:
   - 1.7
 before_install:
   - go get github.com/mattn/goveralls
-  - go get golang.org/x/tools/cmd/cover
 script:
-  - $HOME/gopath/bin/goveralls -service=travis-ci -v ./...
+  - $HOME/gopath/bin/goveralls -service=travis-ci -v
