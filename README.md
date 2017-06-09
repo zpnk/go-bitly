@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/zpnk/go-bitly.svg?branch=master)](https://travis-ci.org/zpnk/go-bitly)
 [![Coverage Status](https://coveralls.io/repos/github/zpnk/go-bitly/badge.svg?branch=master)](https://coveralls.io/github/zpnk/go-bitly?branch=master)
-[![GoDoc](https://godoc.org/github.com/zpnk/go-bitly/bitly?status.svg)](https://godoc.org/github.com/zpnk/go-bitly/bitly)
+[![GoDoc](https://godoc.org/github.com/zpnk/go-bitly/bitly?status.svg)](https://godoc.org/github.com/zpnk/go-bitly)
 
 Simple Bitly API v3 client for Go.
 
