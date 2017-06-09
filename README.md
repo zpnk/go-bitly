@@ -17,9 +17,9 @@ $ go get github.com/zpnk/go-bitly
 ```go
 import "github.com/zpnk/go-bitly"
 
-client := bitly.New("<token>")
+b := bitly.New("<token>")
 
-links, err := client.Link.Lookup("http://golang.org/", "http://google.com/")
+links, err := b.Links.Lookup("http://golang.org/", "http://google.com/")
 ```
 
 ## Roadmap
