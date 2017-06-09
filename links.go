@@ -42,6 +42,14 @@ func (client *Links) req(path string, params url.Values, key string) (links []Li
 }
 
 // Expand returns the long urls for a given set short urls.
+// Returns slice of:
+//
+//	bitly.Link{
+//		GlobalHash: "1RmnUT",
+//		LongURL:    "http://google.com",
+//		ShortURL:   "http://bit.ly/1RmnUT",
+//		UserHash:   "1RmnUT",
+//	}
 //
 // Bitly API docs: http://dev.bitly.com/links.html#v3_expand
 func (client *Links) Expand(urls ...string) (links []Link, err error) {
@@ -49,6 +57,15 @@ func (client *Links) Expand(urls ...string) (links []Link, err error) {
 }
 
 // Info returns the page title and other metadata for a given set of short urls.
+// Returns slice of:
+//
+//	bitly.Link{
+//		GlobalHash: "1RmnUT",
+//		ShortURL:   "http://bit.ly/1RmnUT",
+//		Title:      "Google",
+//		UserHash:   "1RmnUT",
+//		CreatedAt:  1212926400,
+//	}
 //
 // Bitly API docs: http://dev.bitly.com/links.html#v3_info
 func (client *Links) Info(urls ...string) (links []Link, err error) {
@@ -56,6 +73,12 @@ func (client *Links) Info(urls ...string) (links []Link, err error) {
 }
 
 // Lookup queries for bitlink(s) mapping to the given url(s).
+// Returns slice of:
+//
+//	bitly.Link{
+//		URL:           "http://www.google.com/",
+//		AggregateLink: "http://www.google.com/",
+//	}
 //
 // Bitly API docs: https://dev.bitly.com/links.html#v3_link_lookup
 func (client *Links) Lookup(urls ...string) (links []Link, err error) {
@@ -63,6 +86,15 @@ func (client *Links) Lookup(urls ...string) (links []Link, err error) {
 }
 
 // Shorten returns a short url from a given long url.
+// Returns:
+//
+//	bitly.Link{
+//		LongURL:    "http://google.com/",
+//		GlobalHash: "900913",
+//		Hash:       "ze6poY",
+//		NewHash:    0,
+//		URL:        "http://bit.ly/ze6poY",
+//	}
 //
 // Bitly API docs: http://dev.bitly.com/links.html#v3_shorten
 func (client *Links) Shorten(longURL string) (link Link, err error) {
