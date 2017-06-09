@@ -16,6 +16,8 @@ type Link struct {
 	LongURL       string `json:"long_url"`
 	GlobalHash    string `json:"global_hash"`
 	UserHash      string `json:"user_hash"`
+	Hash          string `json:"hash"`
+	NewHash       int    `json:"new_hash"`
 	Title         string `json:"title"`
 	URL           string `json:"url"`
 	AggregateLink string `json:"aggregate_link"`
@@ -58,4 +60,20 @@ func (client *Links) Info(urls ...string) (links []Link, err error) {
 // Bitly API docs: https://dev.bitly.com/links.html#v3_link_lookup
 func (client *Links) Lookup(urls ...string) (links []Link, err error) {
 	return client.req("/link/lookup", url.Values{"url": urls}, "link_lookup")
+}
+
+// Shorten returns a short url from a given long url.
+//
+// Bitly API docs: http://dev.bitly.com/links.html#v3_shorten
+func (client *Links) Shorten(longURL string) (link Link, err error) {
+	req, err := client.get("/shorten", url.Values{
+		"longUrl": []string{longURL},
+	})
+	if err != nil {
+		return
+	}
+
+	err = json.Unmarshal(req.Data, &link)
+
+	return
 }

@@ -149,3 +149,36 @@ func TestLinks_Lookup_multiple(t *testing.T) {
 		t.Errorf("Links.Lookup returned %#v, want %#v", links, want)
 	}
 }
+
+func TestLinks_Shorten(t *testing.T) {
+	setup()
+	defer teardown()
+
+	newEndpoint("/shorten", jsonRes(
+		`{
+			"global_hash": "900913",
+			"hash": "ze6poY",
+			"long_url": "http://google.com/",
+			"new_hash": 0,
+			"url": "http://bit.ly/ze6poY"
+		}`,
+		200,
+		"OK",
+	))
+
+	link, err := client.Links.Shorten("http://google.com/")
+	if err != nil {
+		t.Fatalf("Links.Shorten returned error: %v", err)
+	}
+
+	want := Link{
+		GlobalHash: "900913",
+		Hash:       "ze6poY",
+		LongURL:    "http://google.com/",
+		NewHash:    0,
+		URL:        "http://bit.ly/ze6poY",
+	}
+	if !reflect.DeepEqual(link, want) {
+		t.Errorf("Links.Shorten returned %+v, want %+v", link, want)
+	}
+}
