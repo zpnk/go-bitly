@@ -13,7 +13,7 @@ type Client struct {
 	APIURL      *url.URL
 	HTTPClient  *http.Client
 
-	Link *Link
+	Links *Links
 }
 
 // Response is a representation of the standard Bitly API reponse.
@@ -50,7 +50,7 @@ func New(accessToken string) (client *Client) {
 
 	client.HTTPClient = http.DefaultClient
 
-	client.Link = &Link{client}
+	client.Links = &Links{client}
 
 	return
 }

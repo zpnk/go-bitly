@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestLink_Expand(t *testing.T) {
+func TestLinks_Expand(t *testing.T) {
 	setup()
 	defer teardown()
 
@@ -24,23 +24,23 @@ func TestLink_Expand(t *testing.T) {
 		"OK",
 	))
 
-	links, err := client.Link.Expand("http://bit.ly/1RmnUT")
+	links, err := client.Links.Expand("http://bit.ly/1RmnUT")
 	if err != nil {
-		t.Fatalf("Link.Expand returned error: %v", err)
+		t.Fatalf("Links.Expand returned error: %v", err)
 	}
 
-	want := ExpandedLink{
+	want := Link{
 		GlobalHash: "1RmnUT",
 		LongURL:    "http://google.com",
 		ShortURL:   "http://bit.ly/1RmnUT",
 		UserHash:   "1RmnUT",
 	}
 	if !reflect.DeepEqual(links[0], want) {
-		t.Errorf("Link.Expand returned %+v, want %+v", links[0], want)
+		t.Errorf("Links.Expand returned %+v, want %+v", links[0], want)
 	}
 }
 
-func TestLink_Info(t *testing.T) {
+func TestLinks_Info(t *testing.T) {
 	setup()
 	defer teardown()
 
@@ -61,12 +61,12 @@ func TestLink_Info(t *testing.T) {
 		"OK",
 	))
 
-	links, err := client.Link.Info("http://bit.ly/1RmnUT")
+	links, err := client.Links.Info("http://bit.ly/1RmnUT")
 	if err != nil {
-		t.Fatalf("Link.Info returned error: %v", err)
+		t.Fatalf("Links.Info returned error: %v", err)
 	}
 
-	want := LinkInfo{
+	want := Link{
 		CreatedAt:  1212926400,
 		GlobalHash: "1RmnUT",
 		ShortURL:   "http://bit.ly/1RmnUT",
@@ -74,11 +74,11 @@ func TestLink_Info(t *testing.T) {
 		UserHash:   "1RmnUT",
 	}
 	if !reflect.DeepEqual(links[0], want) {
-		t.Errorf("Link.Info returned %+v, want %+v", links[0], want)
+		t.Errorf("Links.Info returned %+v, want %+v", links[0], want)
 	}
 }
 
-func TestLink_Lookup_single(t *testing.T) {
+func TestLinks_Lookup_single(t *testing.T) {
 	setup()
 	defer teardown()
 
@@ -95,18 +95,21 @@ func TestLink_Lookup_single(t *testing.T) {
 		"OK",
 	))
 
-	links, err := client.Link.Lookup("http://www.google.com/")
+	links, err := client.Links.Lookup("http://www.google.com/")
 	if err != nil {
-		t.Fatalf("Link.Lookup returned error: %v", err)
+		t.Fatalf("Links.Lookup returned error: %v", err)
 	}
 
-	want := LinkLookup{AggregateLink: "http://bit.ly/2V6CFi", URL: "http://www.google.com/"}
+	want := Link{
+		AggregateLink: "http://bit.ly/2V6CFi",
+		URL:           "http://www.google.com/",
+	}
 	if !reflect.DeepEqual(links[0], want) {
-		t.Errorf("Link.Lookup returned %+v, want %+v", links[0], want)
+		t.Errorf("Links.Lookup returned %+v, want %+v", links[0], want)
 	}
 }
 
-func TestLink_Lookup_multiple(t *testing.T) {
+func TestLinks_Lookup_multiple(t *testing.T) {
 	setup()
 	defer teardown()
 
@@ -127,16 +130,22 @@ func TestLink_Lookup_multiple(t *testing.T) {
 		"OK",
 	))
 
-	links, err := client.Link.Lookup("http://www.google.com/", "http://www.facebook.com/")
+	links, err := client.Links.Lookup("http://www.google.com/", "http://www.facebook.com/")
 	if err != nil {
-		t.Fatalf("Link.Lookup returned error: %v", err)
+		t.Fatalf("Links.Lookup returned error: %v", err)
 	}
 
-	want := []LinkLookup{
-		LinkLookup{AggregateLink: "http://bit.ly/2V6CFi", URL: "http://www.google.com/"},
-		LinkLookup{AggregateLink: "http://bit.ly/4VGeu", URL: "http://www.facebook.com/"},
+	want := []Link{
+		Link{
+			AggregateLink: "http://bit.ly/2V6CFi",
+			URL:           "http://www.google.com/",
+		},
+		Link{
+			AggregateLink: "http://bit.ly/4VGeu",
+			URL:           "http://www.facebook.com/",
+		},
 	}
 	if !reflect.DeepEqual(links, want) {
-		t.Errorf("Link.Lookup returned %#v, want %#v", links, want)
+		t.Errorf("Links.Lookup returned %#v, want %#v", links, want)
 	}
 }
