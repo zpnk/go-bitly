@@ -9,9 +9,10 @@ Usage:
 
 	import "github.com/zpnk/go-bitly"
 
-	client := bitly.New("<token>")
+	b := bitly.New("<token>")
 
-	links, err := bitly.Link.Lookup("http://golang.org/", "http://google.com/")
+	shortURL, err := b.Links.Shorten("https://golang.org/")
 
+	// bitly.Link{URL:"https://bit.ly/2scFxid", ... }
 */
 package bitly

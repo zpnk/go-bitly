@@ -6,7 +6,7 @@
 
 Simple Bitly API v3 client for Go.
 
-**Work in Progress**
+***Work in progress***
 
 ## Usage
 
@@ -19,7 +19,9 @@ import "github.com/zpnk/go-bitly"
 
 b := bitly.New("<token>")
 
-links, err := b.Links.Lookup("http://golang.org/", "http://google.com/")
+shortURL, err := b.Links.Shorten("https://golang.org/")
+
+// bitly.Link{URL:"https://bit.ly/2scFxid", ... }
 ```
 
 ## Roadmap
